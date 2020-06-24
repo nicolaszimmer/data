@@ -1,0 +1,154 @@
+info:
+    version: 1.0.0
+    title: 'The Iris Data Set'
+    contact:
+        name: nicolaszimmer
+        url: 'https://github.com/nicolaszimmer'
+    x-gitrows-repository: 'https://github.com/nicolaszimmer/data/blob/master/iris.csv'
+    x-gitrows-api-path: '@github/nicolaszimmer/data/iris.csv'
+    description: "\n\n---\n\nCreated with [GitRows](https://gitrows.com)"
+components:
+    schemas:
+        Error:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                message:
+                    type: string
+                documentation:
+                    type: object
+                    properties:
+                        description:
+                            type: string
+                        url:
+                            type: string
+        Record:
+            type: object
+            properties:
+                SepalLength:
+                    type: number
+                    format: float
+                SepalWidth:
+                    type: integer
+                    format: int32
+                PetalLength:
+                    type: number
+                    format: float
+                PetalWidth:
+                    type: number
+                    format: float
+                Name:
+                    type: string
+openapi: 3.0.0
+servers:
+    -
+        url: 'https://api.gitrows.com'
+paths:
+    /@github/nicolaszimmer/data/iris.csv:
+        get:
+            description: 'Return a list of records'
+            operationId: listRecords
+            parameters:
+                -
+                    in: query
+                    name: SepalLength
+                    schema:
+                        oneOf:
+                            -
+                                type: number
+                            -
+                                type: string
+                    description: "Select records that match value for `SepalLength`.\n\nYou can optionally use the following comparison operators as prefixes to your values, e.g. `SepalLength=gt:10`:\n\n`not:` equals not; `lt:` less than; `lte:` less than or equal; `gt:` greater than; `gte:` greater than or equal"
+                    allowReserved: true
+                -
+                    in: query
+                    name: SepalWidth
+                    schema:
+                        oneOf:
+                            -
+                                type: integer
+                            -
+                                type: string
+                    description: "Select records that match value for `SepalWidth`.\n\nYou can optionally use the following comparison operators as prefixes to your values, e.g. `SepalWidth=gt:10`:\n\n`not:` equals not; `lt:` less than; `lte:` less than or equal; `gt:` greater than; `gte:` greater than or equal"
+                    allowReserved: true
+                -
+                    in: query
+                    name: PetalLength
+                    schema:
+                        oneOf:
+                            -
+                                type: number
+                            -
+                                type: string
+                    description: "Select records that match value for `PetalLength`.\n\nYou can optionally use the following comparison operators as prefixes to your values, e.g. `PetalLength=gt:10`:\n\n`not:` equals not; `lt:` less than; `lte:` less than or equal; `gt:` greater than; `gte:` greater than or equal"
+                    allowReserved: true
+                -
+                    in: query
+                    name: PetalWidth
+                    schema:
+                        oneOf:
+                            -
+                                type: number
+                            -
+                                type: string
+                    description: "Select records that match value for `PetalWidth`.\n\nYou can optionally use the following comparison operators as prefixes to your values, e.g. `PetalWidth=gt:10`:\n\n`not:` equals not; `lt:` less than; `lte:` less than or equal; `gt:` greater than; `gte:` greater than or equal"
+                    allowReserved: true
+                -
+                    in: query
+                    name: Name
+                    schema:
+                        type: string
+                    description: "Select records that match value for `Name`.\n\nYou can optionally use the following comparison operators as prefixes to your values, e.g. `Name=*:foo`:\n\n`starts:` text starts with, alias: `^:`; `contains:` contains text, alias: `*:`; `ends:` text ends with, alias: `$:`"
+                    allowReserved: true
+                -
+                    in: query
+                    name: $count
+                    schema:
+                        type: string
+                    description: 'Counts the records in the data set, use `*` or any `columnName` as parameter'
+                    allowReserved: true
+                -
+                    in: query
+                    name: $avg
+                    schema:
+                        type: string
+                    description: 'Calculates the average of all numeric values in `columnName`'
+                    allowReserved: true
+                -
+                    in: query
+                    name: $sum
+                    schema:
+                        type: string
+                    description: 'Calculates the sum of all numeric values in `columnName`'
+                    allowReserved: true
+                -
+                    in: query
+                    name: $min
+                    schema:
+                        type: string
+                    description: 'Returns the smallest of all numeric values in `columnName`'
+                    allowReserved: true
+                -
+                    in: query
+                    name: $max
+                    schema:
+                        type: string
+                    description: 'Returns the largest of all numeric values in `columnName`'
+                    allowReserved: true
+            responses:
+                '200':
+                    description: 'A list of records with any optionally provided filters applied.'
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Record'
+                default:
+                    description: 'Error Payload'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
